@@ -13,7 +13,7 @@ pipeline {
         steps {
           sh "mvn test"
         }
-        post {
+        post { //run even if "mvn test" fail
           always {
             junit 'target/surefire-reports/*.xml'
             jacoco execPattern: 'target/jacoco.exec'
@@ -23,10 +23,10 @@ pipeline {
 
       stage('Docker build and Push') {
         steps {
-          withDockerRegistry(["credentialsId": "docker-hub", "url": ""]) {
+          withDockerRegistry(["credentialsId": "docker-hub", "url": ""]) { //run docker login 
             sh 'printenv'
-            sh 'docker build -t xsronsocheata/numeric-app:""${GIT_COMMIT}""'
-            //sh 'docker push -t xsronsocheata/numeric-app:""${GIT_COMMIT}""'
+            sh 'docker build -t xsronsocheata/numeric-app:""${GIT_COMMIT}"" .'
+            sh 'docker push -t xsronsocheata/numeric-app:""${GIT_COMMIT}""'
           }
         }
       }
