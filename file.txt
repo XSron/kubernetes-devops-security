@@ -1,2 +1,2 @@
-secret=title
+secretKey=title
 urlencoded=ZXdld2J3Z2Vnd2U=
